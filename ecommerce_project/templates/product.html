@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {{ product.description|truncatewords:155 }}
+{% endblock %}
+{% block title %}
+    {{ product.name }} - Shopulse store
+{% endblock %}
+{% block content %}
+<div class="prod-nav">
+   <center><p><a href="{{ product.category.get_url }}">{{ product.category}}</a> | {{ product.name }}</p></center>
+</div>
+<div class="container"><br><br>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div class="prod-img-div">
+                <img class="col-lg-8 prod-img" src="{{product.image.url}}" alt="{{ product.name }}" width="200px">
+            </div>
+        </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                <div>
+                <b><h3 class="prod_title">{{ product.name }}</h3></b>
+                <b><p class="text-justify prod_text">Product Description</p></b>
+                <p class="prod_desc">{{ product.description }}</p>
+                <b><p class="prod_price">${{ product.price }}</p></b>
+                {% if product.stock <= 0 %}
+                    <p>Out of stock</p>
+                {% else %}
+                    <a class="btn" style="background-color: #00C0B4; color: white;" href="{% url 'cart:add_cart' product.id %}">Add to cart</a>
+                {% endif %}
+            </div>
+        </div>
+    </div><br><br>
+</div>
+{% endblock %}

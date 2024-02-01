@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to Shopulse store where you can buy different items...
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{ category.name }} - Shopulse Store
+    {% else %}
+        See our new collections - Shopulse Store
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+         {% if category %}
+            <div class="cat-banner">
+                <img src="{{category.image.url}}" alt="{{category.name}}">
+            </div><br>
+        {% else %}
+            <div class="banner">
+                <img src="{% static 'image/banner-shopulse.png' %}" alt="banner image" >
+            </div>
+                <div class="off-banner">
+                <img src="{% static 'image/off-banner.png' %}" alt="banner image" >
+                    <a href="{% url 'shop:allProdCat' %}"><button class="image-button"><b>Shop now</b></button></a>
+            </div>
+            {% endif %}
+            <div class="container">
+                <div class="row mx_auto">
+                    {% for product in products.object_list %}
+                    <div class="my_bottom_margin col-6 col-sm-6 col-md-4 col-lg-2">
+                        <div class="card text-center">
+                            <a href="{{product.get_url}}"><img class="card-img-top" style="max-height: 12rem; min-height: 12rem;" src="{{product.image.url}}" alt="{{product.name}}"></a>
+                            <div class="card-body">
+                                <h6>{{product.name}}</h6>
+                                <b><p>${{product.price}}</p></b>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mx-auto">
+                    {% if products.paginator.num_pages > 1 %}
+
+                    <hr>
+                    <div class="paginator-div text-center">
+                        {% for pg in products.paginator.page_range %}
+                            <a href="?page={{pg}}" class="btn btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <br>
+            </div>
+
+{% endblock %}
+
+

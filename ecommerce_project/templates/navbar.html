@@ -1,0 +1,11 @@
+{% load static %}
+<nav class="navbar navbar-expand-sm fixed-top" id="main-nav" style="background-color: black; color: white;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'shop:allProdCat' %}"><img width="100px;" src="{% static 'image\logo b&w.png' %}"></a>
+      <form class="d-flex" action="{% url 'search_app:searchResult' %}" method="get">
+        {% csrf_token %}
+        <input class="form-control me-2" type="text" name="q" placeholder="Search...">
+        <button class="btn" style="display: flex; align-items: center;background-color: #00C0B4;color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+  </div>
+</nav>
